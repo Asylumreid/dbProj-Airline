@@ -45,9 +45,9 @@ export default function Footer() {
             <MDBCol md="2" lg="2" xl="2" className="mx-auto mb-4">
               <h6 className="text-uppercase fw-bold mb-4">Links</h6>
               <p>
-                <a as={Link} to="/aboutUs" className="text-reset">
+                <Link to="/upComingFlights" className="text-reset">
                   Flights
-                </a>
+                </Link>
               </p>
               <p>
                 {/* <a href="#!" className="text-reset">
@@ -59,28 +59,8 @@ export default function Footer() {
               </p>
               <p>
                 <Link to="/aircraftDetails" className="text-reset">
-                  About Us
+                  Aircraft Details
                 </Link>
-              </p>
-            </MDBCol>
-
-            <MDBCol md="3" lg="2" xl="2" className="mx-auto mb-4">
-              <h6 className="text-uppercase fw-bold mb-4"> More</h6>
-              <p>
-                <a href="#!" className="text-reset">
-                  Pricing
-                </a>
-              </p>
-              <p>
-                <a href="#!" className="text-reset">
-                  Settings
-                </a>
-              </p>
-
-              <p>
-                <a href="#!" className="text-reset">
-                  Help
-                </a>
               </p>
             </MDBCol>
 

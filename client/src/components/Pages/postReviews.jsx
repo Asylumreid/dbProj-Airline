@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const PostReviews = () => {
+const PostReviews = ({ updateReviews }) => {
   const [topic, setTopic] = useState('');
   const [comment, setComment] = useState('');
 
@@ -9,20 +9,17 @@ const PostReviews = () => {
     e.preventDefault();
 
     try {
-      // Make a POST request to your backend API
       await axios.post('http://localhost:4000/reviews', { topic, comment });
-
+      // Call the updateReviews function to fetch the latest reviews
+      updateReviews();
       // Optionally, reset the form fields
       setTopic('');
       setComment('');
-
-      // Handle any additional logic, such as displaying a success message
     } catch (error) {
       console.error('Error posting review:', error);
       // Handle error, such as displaying an error message
     }
   };
-
   return (
     <div className="container my-3">
       <div className="row">
