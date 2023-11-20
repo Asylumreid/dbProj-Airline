@@ -56,7 +56,7 @@ function NavBar() {
             <Nav.Link as={Link} to="/aircraftDetails">
               Aircrafts
             </Nav.Link>
-            <Nav.Link as={Link} to="/reviews">
+            <Nav.Link as={Link} to={"/reviews"}>
               Past Reviews
             </Nav.Link>           
             {/* <NavDropdown title="More" id="basic-nav-dropdown">
