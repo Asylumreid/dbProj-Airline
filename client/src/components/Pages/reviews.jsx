@@ -43,7 +43,7 @@ const Reviews = () => {
               <p className="card-text">{review.comment}</p>
             </div>
             <div className="card-footer">
-               <small className="text-muted">By: {}</small> {/* for kumar to fetch user id  */}
+               <small className="text-muted">By: {review.first_name}</small> {/* for kumar to fetch user id  */}
             </div>
           </div>
         </div>

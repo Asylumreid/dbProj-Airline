@@ -17,10 +17,10 @@ router.get('/', async (req, res) => {
 
 // POST a new review
 router.post('/', async (req, res) => {
-  const { topic, comment } = req.body;
+  const { topic, comment, first_name } = req.body;
 
   try {
-    const newReview = new Review({ topic, comment });
+    const newReview = new Review({ topic, comment, first_name });
     await newReview.save();
     res.status(201).json(newReview);
   } catch (error) {
@@ -28,5 +28,6 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 export default router;

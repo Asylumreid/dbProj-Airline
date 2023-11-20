@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBRow, MDBCol, MDBContainer } from "mdb-react-ui-kit";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,7 +12,7 @@ import { useEffect } from "react";
 
 const PostReviews = () => {
   const navigate = useNavigate();
-  
+  const [data, setData] = useState(null);
   const [user, setUser] = useState(false);
   const [admin, setAdmin] = useState(false);
   const { timeZone } = Intl.DateTimeFormat().resolvedOptions();
@@ -19,13 +20,9 @@ const PostReviews = () => {
     const loggedInUser = localStorage.getItem("user");
     const loggedInAdmin = localStorage.getItem("admin");
     const storedMessage = localStorage.getItem('toastMessage');
-    if (storedMessage) {
-      // Show the stored message as a toast
-      toast.info(storedMessage);
 
-      // Clear the stored message
-      localStorage.removeItem('toastMessage');
-    }
+
+
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
       setUser(foundUser[0]);
@@ -33,7 +30,28 @@ const PostReviews = () => {
       const foundAdmin = JSON.parse(loggedInAdmin);
       setAdmin(foundAdmin[0]);
     }
-  }, []);
+   
+
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/login/user/`+ parseInt(user.user_id));
+        setData(response.data[0]);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+
+    if (storedMessage) {
+      // Show the stored message as a toast
+      toast.info(storedMessage);
+
+      // Clear the stored message
+      localStorage.removeItem('toastMessage');
+    }
+   
+  }, [user.user_id]);
 
 
   const [topic, setTopic] = useState('');
@@ -49,9 +67,11 @@ const PostReviews = () => {
         window.location.reload();
        // navigate("/login");
       } else {
+        const first_name = data.first_name;
         
-        await axios.post('http://localhost:4000/reviews', { topic, comment });
-
+        await axios.post('http://localhost:4000/reviews', {topic,comment,first_name});
+       
+      
         localStorage.setItem('toastMessage', 'You have posted a review');
         window.location.reload();
         toast.info("You has post a review");
@@ -78,10 +98,10 @@ const PostReviews = () => {
       <div className="row">
         <div className="col-12">
           <h2 className="h4 text-white bg-info mb-3 p-4 rounded">Reviews</h2>
+
+         
+       {data ? (
           <form className="mb-3" onSubmit={handleSubmit}>
-
-          
-
             <div className="form-group">
               <label htmlFor="topic">Topic</label>
               <input
@@ -110,6 +130,8 @@ const PostReviews = () => {
               Post
             </button>
           </form>
+        ) : (<p>Loading user data...</p>
+          )}
           <ToastContainer
         position="top-center"
         autoClose={3000}
@@ -123,10 +145,11 @@ const PostReviews = () => {
         pauseOnHover={false}
         theme="light"
         transition={Flip}
-      />
+        />
         </div>
       </div>
     </div>
+    
   );
 };
 
