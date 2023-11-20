@@ -5,7 +5,7 @@ var router = express.Router();
 
 //to add a new user
 router.post("/", (req, res) => {
-  let { email, password, firstName, lastName, gender, phoneNumber, dob, nic } = req.body;
+  let { email, password, firstName, lastName, gender, phoneNumber, dob } = req.body;
   //   IF LENGTH(val_password) < 8 THEN
   //   SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Password must be at least 8 characters long.';
   // END IF;
@@ -18,7 +18,7 @@ router.post("/", (req, res) => {
     .then((hash) => {
       password = hash;
       const sqlInsert = "call insert_registered_user(?,?,?,?,?,?,?,?)";
-      db.query(sqlInsert, [firstName, lastName, password, email, phoneNumber, gender, dob, nic], (err, result) => {
+      db.query(sqlInsert, [firstName, lastName, password, email, phoneNumber, gender, dob], (err, result) => {
         if (err) {
           res.send(err);
         } else {

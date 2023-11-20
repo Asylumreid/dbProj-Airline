@@ -7,7 +7,7 @@ import { offsetWithColon } from "./server.js";
 //to get all the flight details when flight is selected bu user
 router.get("/flightDetails/:id", (req, res) => {
   const { id } = req.params;
-  const sqlGet = `select f.flight_id, f.origin, f.destination, DATE_FORMAT(CONVERT_TZ(f.departure_time,'+00:00','${offsetWithColon}'), '%Y-%m-%d | %h:%i %p') as departure_time, DATE_FORMAT(CONVERT_TZ(f.arrival_time,'+00:00','${offsetWithColon}') , '%Y-%m-%d | %h:%i %p') as arrival_time, f.economy_fare, f.business_fare, f.platinum_fare  from shedule f where flight_id=?`;
+  const sqlGet = `select f.flight_id, f.origin, f.destination, DATE_FORMAT(CONVERT_TZ(f.departure_time,'+00:00','${offsetWithColon}'), '%Y-%m-%d | %h:%i %p') as departure_time, DATE_FORMAT(CONVERT_TZ(f.arrival_time,'+00:00','${offsetWithColon}') , '%Y-%m-%d | %h:%i %p') as arrival_time, f.economy_fare, f.business_fare, f.platinum_fare  from schedule f where flight_id=?`;
   db.query(sqlGet, id, (err, result) => {
     if (err) res.send({ err: err });
     else res.send(result);
@@ -60,7 +60,7 @@ router.post("/seats", (req, res) => {
   });
 });
 
-//to generate tickets for all psseners
+//to generate tickets for all passeners
 router.post("/ticket", (req, res) => {
   const { ticketInfo, passengerPassports, passengerSeats } = req.body;
   const seatNos = passengerSeats.join(",");

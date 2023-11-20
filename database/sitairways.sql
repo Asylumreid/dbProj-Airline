@@ -4,15 +4,15 @@
 -- Generation Time: Apr 27, 2023 at 01:26 PM
 -- Server version: 8.0.28-19
 -- PHP Version: 7.2.34
-DROP DATABASE `bairways`;
-CREATE DATABASE `bairways`;
-USE `bairways`;
+DROP DATABASE `sitairways`;
+CREATE DATABASE `sitairways`;
+USE `sitairways`;
 
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET time_zone = "+08:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -65,10 +65,9 @@ CREATE  PROCEDURE `insert_passenger` (IN `val_passengerName` VARCHAR(255), IN `v
     VALUES (val_passengerName, val_passportNumber, val_dateOfBirth);
 END$$
 
-CREATE  PROCEDURE `insert_registered_user` (IN `val_firstName` VARCHAR(255), IN `val_lastName` VARCHAR(255), IN `val_password` VARCHAR(255), IN `val_email` VARCHAR(255), IN `val_phoneNumber` VARCHAR(10), IN `val_gender` VARCHAR(10), IN `val_dateOfBirth` DATE, IN `val_NIC` VARCHAR(12))   BEGIN
+CREATE  PROCEDURE `insert_registered_user` (IN `val_firstName` VARCHAR(255), IN `val_lastName` VARCHAR(255), IN `val_password` VARCHAR(255), IN `val_email` VARCHAR(255), IN `val_phoneNumber` VARCHAR(10), IN `val_gender` VARCHAR(10), IN `val_dateOfBirth` DATE)   BEGIN
 	DECLARE var_existing_email varchar(255);
 	DECLARE var_existing_phoneNumber varchar(10);
-	DECLARE var_existing_NIC varchar(12);
     
     SELECT email INTO var_existing_email 
 			FROM registerd_users WHERE email = val_email;
@@ -76,8 +75,6 @@ CREATE  PROCEDURE `insert_registered_user` (IN `val_firstName` VARCHAR(255), IN 
     SELECT phone_number INTO var_existing_phoneNumber 
 			FROM registerd_users WHERE phone_number = val_phoneNumber;
             
-    SELECT NIC INTO var_existing_NIC 
-			FROM registerd_users WHERE NIC = val_NIC;            
 
     IF LENGTH(val_password) < 8 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Password must be at least 8 characters long.';
@@ -86,9 +83,6 @@ CREATE  PROCEDURE `insert_registered_user` (IN `val_firstName` VARCHAR(255), IN 
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Password must contain at least one uppercase letter, one lowercase letter, and one digit.';
     END IF;
     
-    IF NOT (LENGTH(val_NIC) = 10 or LENGTH(val_NIC) = 12) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Incorrect NIC number.';
-    END IF;
     
         START TRANSACTION;
     IF var_existing_email IS NOT NULL THEN
@@ -99,12 +93,9 @@ CREATE  PROCEDURE `insert_registered_user` (IN `val_firstName` VARCHAR(255), IN 
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Phone number already exists.';
     END IF;
     
-    IF var_existing_NIC IS NOT NULL THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'NIC number already exists.';
-    END IF;
 
-    INSERT INTO registerd_users (first_name, last_name, password, email, phone_number, gender, dob, NIC, user_type)
-    VALUES (val_firstName, val_lastName, val_password, val_email, val_phoneNumber, val_gender, val_dateOfBirth, val_NIC, "normal");
+    INSERT INTO registerd_users (first_name, last_name, password, email, phone_number, gender, dob, user_type)
+    VALUES (val_firstName, val_lastName, val_password, val_email, val_phoneNumber, val_gender, val_dateOfBirth, "normal");
 
     COMMIT;
 
@@ -716,7 +707,7 @@ INSERT INTO `passenger` (`passenger_name`, `passport_number`, `dob`) VALUES
 ('Ratnam Kobal', 'G09786123', '2016-02-01'),
 ('Sivarasa Kajan', 'G09786512', '2008-12-12'),
 ('Sivarasa Nimal', 'G09786513', '2000-12-31'),
-('Kobinarth', 'G09786543', '2000-06-22'),
+('Praveen', 'G09786543', '2000-06-22'),
 ('Athavan Aathi', 'G09786763', '2014-12-05'),
 ('Henry', 'G12308320', '2000-01-03'),
 ('Nick Fury', 'G23215312358', '2006-09-27'),
@@ -727,7 +718,7 @@ INSERT INTO `passenger` (`passenger_name`, `passport_number`, `dob`) VALUES
 ('Nirosan', 'H0932340', '2023-01-01'),
 ('Keeran', 'H2138329', '2000-09-14'),
 ('Thineshan', 'H23489234', '2023-01-01'),
-('Kobinarth', 'H2349223', '2023-01-01'),
+('Kumar', 'H2349223', '2023-01-01'),
 ('Kelen', 'H23923242', '2003-01-08'),
 ('Vicky Kaushal', 'H2743598L', '1999-01-03'),
 ('Hrithik Roshan', 'H7189175I', '2010-02-08'),
@@ -865,7 +856,6 @@ CREATE TABLE `registerd_users` (
   `phone_number` varchar(10) DEFAULT NULL,
   `gender` varchar(10) DEFAULT NULL,
   `dob` date DEFAULT NULL,
-  `NIC` varchar(12) DEFAULT NULL,
   `user_type` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -873,15 +863,15 @@ CREATE TABLE `registerd_users` (
 -- Dumping data for table `registerd_users`
 --
 
-INSERT INTO `registerd_users` (`user_id`, `first_name`, `last_name`, `password`, `email`, `phone_number`, `gender`, `dob`, `NIC`, `user_type`) VALUES
-(1, 'Kobinarth', 'Panchalingam', 'Itsme043', 'root@gmail.com', '0775694740', 'male', '2023-01-12', '200017400402', 'gold'),
-(21, 'asdg', 'hfdjhda', 'sathb@lkH231', 'fgsd@gmail.com', '1243467845', 'male', '2023-01-03', '200003146879', 'normal'),
-(22, 'Sanujen', 'Premkumar', 'sanujen29', 'sanuprem6@gmail.com', '0758528933', 'male', '2000-07-29', '200024587224', 'frequent'),
-(23, 'Sathveegan', 'Yogendrarajah', 'sathvee123', 'ysathu8@gmail.com', '0764986321', 'male', '2000-03-08', '200003146872', 'frequent'),
-(24, 'si', 'Kajan', 'Qnhiudb2gh3n', 'sivanisa@gmail.com', '0760022990', 'male', '2000-03-25', '200008500395', 'normal'),
-(25, 'Pairavi', 'Thanancheyan', 'dfjdfdf', 'paira@gmail.com', '0774464523', 'female', '2000-11-02', '200087564372', 'frequent'),
-(27, 'Sivarasa', 'Nisanthan', 'South@2019', 'sivanisanthan2503@gmail.com', '0760022992', 'male', '2000-03-25', '200008400395', 'frequent'),
-(28, 'Mathusha', 'Sivaananthan', 'Mathu2k#2000', 'mathushasiva2k@gmail.com', '0772956568', 'female', '2000-01-01', '200050100891', 'normal');
+INSERT INTO `registerd_users` (`user_id`, `first_name`, `last_name`, `password`, `email`, `phone_number`, `gender`, `dob`, `user_type`) VALUES
+(1, 'Praveen', 'Kumar', 'handsomePraveen', 'pk@gmail.com', '96364586', 'male', '2000-01-12', 'gold'),
+(21, 'asdg', 'hfdjhda', 'sathb@lkH231', 'fgsd@gmail.com', '1243467845', 'male', '2023-01-03', 'normal'),
+(22, 'Sanujen', 'Premkumar', 'sanujen29', 'sanuprem6@gmail.com', '0758528933', 'male', '2000-07-29', 'frequent'),
+(23, 'Sathveegan', 'Yogendrarajah', 'sathvee123', 'ysathu8@gmail.com', '0764986321', 'male', '2000-03-08', 'frequent'),
+(24, 'si', 'Kajan', 'Qnhiudb2gh3n', 'sivanisa@gmail.com', '0760022990', 'male', '2000-03-25', 'normal'),
+(25, 'Pairavi', 'Thanancheyan', 'dfjdfdf', 'paira@gmail.com', '0774464523', 'female', '2000-11-02', 'frequent'),
+(27, 'Sivarasa', 'Nisanthan', 'South@2019', 'sivanisanthan2503@gmail.com', '0760022992', 'male', '2000-03-25', 'frequent'),
+(28, 'Mathusha', 'Sivaananthan', 'Mathu2k#2000', 'mathushasiva2k@gmail.com', '0772956568', 'female', '2000-01-01', 'normal');
 
 -- --------------------------------------------------------
 

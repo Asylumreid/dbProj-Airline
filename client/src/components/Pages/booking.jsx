@@ -213,7 +213,7 @@ function Booking() {
       passengerDob: passengerDob,
     }).then((response) => {
       setShow3(true);
-      toast.success("Passenger deatails are submitted");
+      toast.success("Passenger details are submitted");
       setControl(true);
       setControlInput(style2);
     });
@@ -322,7 +322,7 @@ function Booking() {
       <div className="container">
         <div className="row mt-3 justify-content-between">
           <div className="card col-12 col-md-8 order-2   order-md-1  mb-4">
-            <h3 className="mt-3">Step 1 - Fill passenger deatails</h3>
+            <h3 className="mt-3">Step 1 - Fill passenger details</h3>
             <hr />
             <Form onSubmit={handleSubmitPassengers}>
               <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">

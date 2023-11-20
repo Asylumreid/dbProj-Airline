@@ -32,7 +32,6 @@ function SignUp() {
     email: "",
     password: "",
     phoneNumber: "",
-    nic: "",
     dob: "",
     gender: "",
   });
@@ -58,7 +57,6 @@ function SignUp() {
       gender: signUpInfo.gender,
       phoneNumber: signUpInfo.phoneNumber,
       dob: signUpInfo.dob,
-      nic: signUpInfo.nic,
     }).then((response) => {
       if (response.data != "1") {
         toast.error(response.data.sqlMessage);
@@ -119,9 +117,6 @@ function SignUp() {
               <MDBCol md="6">
                 <MDBInput wrapperClass="mb-4" label="Phone Number" name="phoneNumber" type="tel" onChange={handleChange} required />
               </MDBCol>
-              <MDBCol md="6">
-                <MDBInput wrapperClass="mb-4" label="NIC Number" name="nic" type="tel" onChange={handleChange} required />
-              </MDBCol>
             </MDBRow>
 
             <MDBRow>
@@ -133,7 +128,6 @@ function SignUp() {
                 <h6 className="fw-bold">Gender: </h6>
                 <MDBRadio name="gender" value="female" label="Female" onChange={handleChange} inline required />
                 <MDBRadio name="gender" value="male" label="Male" onChange={handleChange} inline required />
-                <MDBRadio name="gender" value="other" label="Other" onChange={handleChange} inline required />
               </MDBCol>
             </MDBRow>
 
