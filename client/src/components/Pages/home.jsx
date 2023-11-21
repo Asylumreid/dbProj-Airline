@@ -35,7 +35,7 @@ function Home() {
 
       <div class="container mt-1">
         <Alert show={show} variant="warning" dismissible onClose={() => setShow(false)}>
-          <Alert.Heading>Important Notice</Alert.Heading>! Fligths are sheduled between Feb 1st 2024 to Feb 7th 2024
+          <Alert.Heading>Important Notice</Alert.Heading>! Fligths are scheduled between Feb 1st 2024 to Feb 7th 2024
         </Alert>
       </div>
       <UpComingFlights />

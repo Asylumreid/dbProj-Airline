@@ -117,7 +117,7 @@ function ViewFlights() {
                   <td className="text-center">
                     <Form>
                       <Form.Select onChange={(e) => setStatus(e.target.value)}>
-                        <option value={1}>Sheduled</option>
+                        <option value={1}>Scheduled</option>
                         <option value={2}>Delayed</option>
                         <option value={3}>Departed</option>
                         <option value={4}>In Air</option>

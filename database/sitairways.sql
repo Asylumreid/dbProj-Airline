@@ -1,10 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 4.8.4
--- https://www.phpmyadmin.net/
--- Generation Time: Apr 27, 2023 at 01:26 PM
--- Server version: 8.0.28-19
--- PHP Version: 7.2.34
-DROP DATABASE `sitairways`;
+DROP DATABASE IF EXISTS `sitairways`;
 CREATE DATABASE `sitairways`;
 USE `sitairways`;
 
@@ -21,7 +15,7 @@ SET time_zone = "+08:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bairways`
+-- Database: `sitairways`
 --
 
 DELIMITER $$
@@ -29,14 +23,14 @@ DELIMITER $$
 -- Procedures
 --
 CREATE  PROCEDURE `booking_count_report` (`from_date` DATETIME, `to_date` DATETIME)   BEGIN
-     SELECT registerd_users.user_type, count(booking_id) as booking_count FROM booking
-        RIGHT JOIN registerd_users USING(user_id)
+     SELECT registered_users.user_type, count(booking_id) as booking_count FROM booking
+        RIGHT JOIN registered_users USING(user_id)
         WHERE booking_id IN
         (
             SELECT booking_id FROM booking WHERE
             booked_date>=from_date AND booked_date<=to_date
         )
-        GROUP BY registerd_users.user_type;
+        GROUP BY registered_users.user_type;
 END$$
 
 CREATE  PROCEDURE `generate_ticket` (IN `booking_id` VARCHAR(255), IN `seat_nos` VARCHAR(255), IN `passport_numbers` VARCHAR(1000), IN `count` INT)   BEGIN
@@ -70,10 +64,10 @@ CREATE  PROCEDURE `insert_registered_user` (IN `val_firstName` VARCHAR(255), IN 
 	DECLARE var_existing_phoneNumber varchar(10);
     
     SELECT email INTO var_existing_email 
-			FROM registerd_users WHERE email = val_email;
+			FROM registered_users WHERE email = val_email;
 
     SELECT phone_number INTO var_existing_phoneNumber 
-			FROM registerd_users WHERE phone_number = val_phoneNumber;
+			FROM registered_users WHERE phone_number = val_phoneNumber;
             
 
     IF LENGTH(val_password) < 8 THEN
@@ -94,7 +88,7 @@ CREATE  PROCEDURE `insert_registered_user` (IN `val_firstName` VARCHAR(255), IN 
     END IF;
     
 
-    INSERT INTO registerd_users (first_name, last_name, password, email, phone_number, gender, dob, user_type)
+    INSERT INTO registered_users (first_name, last_name, password, email, phone_number, gender, dob, user_type)
     VALUES (val_firstName, val_lastName, val_password, val_email, val_phoneNumber, val_gender, val_dateOfBirth, "normal");
 
     COMMIT;
@@ -460,10 +454,10 @@ INSERT INTO `booking` (`booking_id`, `amount`, `user_id`, `flight_id`, `booked_d
 DELIMITER $$
 CREATE TRIGGER `update_user_type` AFTER UPDATE ON `booking` FOR EACH ROW BEGIN
 	IF ((select count(booking_id) as booking_count from booking where user_id=new.user_id and status='paid') >= 20) THEN
-		update registerd_users 
+		update registered_users 
         set user_type = "gold" where user_id = new.user_id ;
 	ELSEIF ((select count(booking_id) as booking_count from booking where user_id=new.user_id and status='paid') >= 10 ) THEN
-    update registerd_users 
+    update registered_users 
         set user_type = "frequent" where user_id = new.user_id;
 	END IF;
     END
@@ -844,10 +838,10 @@ CREATE TABLE `passenger_flight_details` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `registerd_users`
+-- Table structure for table `registered_users`
 --
 
-CREATE TABLE `registerd_users` (
+CREATE TABLE `registered_users` (
   `user_id` int NOT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
@@ -860,10 +854,10 @@ CREATE TABLE `registerd_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `registerd_users`
+-- Dumping data for table `registered_users`
 --
 
-INSERT INTO `registerd_users` (`user_id`, `first_name`, `last_name`, `password`, `email`, `phone_number`, `gender`, `dob`, `user_type`) VALUES
+INSERT INTO `registered_users` (`user_id`, `first_name`, `last_name`, `password`, `email`, `phone_number`, `gender`, `dob`, `user_type`) VALUES
 (1, 'Praveen', 'Kumar', 'handsomePraveen', 'pk@gmail.com', '96364586', 'male', '2000-01-12', 'gold'),
 (21, 'asdg', 'hfdjhda', 'sathb@lkH231', 'fgsd@gmail.com', '1243467845', 'male', '2023-01-03', 'normal'),
 (22, 'Sanujen', 'Premkumar', 'sanujen29', 'sanuprem6@gmail.com', '0758528933', 'male', '2000-07-29', 'frequent'),
@@ -948,10 +942,10 @@ CREATE TABLE `seat_details` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `shedule`
+-- Stand-in structure for view `schedule`
 -- (See below for the actual view)
 --
-CREATE TABLE `shedule` (
+CREATE TABLE `schedule` (
 `airplane_id` varchar(5)
 ,`arrival_time` datetime
 ,`business_fare` float
@@ -1191,11 +1185,11 @@ CREATE ALGORITHM=UNDEFINED  SQL SECURITY DEFINER VIEW `seat_details`  AS SELECT 
 -- --------------------------------------------------------
 
 --
--- Structure for view `shedule`
+-- Structure for view `schedule`
 --
-DROP TABLE IF EXISTS `shedule`;
+DROP TABLE IF EXISTS `schedule`;
 
-CREATE ALGORITHM=UNDEFINED  SQL SECURITY DEFINER VIEW `shedule`  AS SELECT `flights`.`route_id` AS `route_id`, `flights`.`flight_id` AS `flight_id`, `flights`.`airplane_id` AS `airplane_id`, `flight_status`.`status` AS `status`, `flights`.`departure_time` AS `departure_time`, `flights`.`arrival_time` AS `arrival_time`, `flights`.`flight_no` AS `flight_no`, `flights`.`economy_fare` AS `economy_fare`, `flights`.`business_fare` AS `business_fare`, `flights`.`platinum_fare` AS `platinum_fare`, `route`.`origin` AS `origin`, `route`.`destination` AS `destination`, `airport`.`image_url` AS `image_url` FROM (((`flights` left join `route` on((`flights`.`route_id` = `route`.`route_id`))) left join `airport` on((`route`.`destination` = `airport`.`airport_code`))) left join `flight_status` on((`flights`.`flightstatus_id` = `flight_status`.`flightstatus_id`))) ;
+CREATE ALGORITHM=UNDEFINED  SQL SECURITY DEFINER VIEW `schedule`  AS SELECT `flights`.`route_id` AS `route_id`, `flights`.`flight_id` AS `flight_id`, `flights`.`airplane_id` AS `airplane_id`, `flight_status`.`status` AS `status`, `flights`.`departure_time` AS `departure_time`, `flights`.`arrival_time` AS `arrival_time`, `flights`.`flight_no` AS `flight_no`, `flights`.`economy_fare` AS `economy_fare`, `flights`.`business_fare` AS `business_fare`, `flights`.`platinum_fare` AS `platinum_fare`, `route`.`origin` AS `origin`, `route`.`destination` AS `destination`, `airport`.`image_url` AS `image_url` FROM (((`flights` left join `route` on((`flights`.`route_id` = `route`.`route_id`))) left join `airport` on((`route`.`destination` = `airport`.`airport_code`))) left join `flight_status` on((`flights`.`flightstatus_id` = `flight_status`.`flightstatus_id`))) ;
 
 --
 -- Indexes for dumped tables
@@ -1261,9 +1255,9 @@ ALTER TABLE `passenger`
   ADD PRIMARY KEY (`passport_number`);
 
 --
--- Indexes for table `registerd_users`
+-- Indexes for table `registered_users`
 --
-ALTER TABLE `registerd_users`
+ALTER TABLE `registered_users`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `email` (`email`),
   ADD KEY `user_type` (`user_type`);
@@ -1303,9 +1297,9 @@ ALTER TABLE `flights`
   MODIFY `flight_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
--- AUTO_INCREMENT for table `registerd_users`
+-- AUTO_INCREMENT for table `registered_users`
 --
-ALTER TABLE `registerd_users`
+ALTER TABLE `registered_users`
   MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
@@ -1329,7 +1323,7 @@ ALTER TABLE `airplane`
 --
 ALTER TABLE `booking`
   ADD CONSTRAINT `flight_id` FOREIGN KEY (`flight_id`) REFERENCES `flights` (`flight_id`),
-  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `registerd_users` (`user_id`);
+  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `registered_users` (`user_id`);
 
 --
 -- Constraints for table `flights`
@@ -1340,10 +1334,10 @@ ALTER TABLE `flights`
   ADD CONSTRAINT `route_id` FOREIGN KEY (`route_id`) REFERENCES `route` (`route_id`);
 
 --
--- Constraints for table `registerd_users`
+-- Constraints for table `registered_users`
 --
-ALTER TABLE `registerd_users`
-  ADD CONSTRAINT `registerd_users_ibfk_1` FOREIGN KEY (`user_type`) REFERENCES `user_types` (`user_type`);
+ALTER TABLE `registered_users`
+  ADD CONSTRAINT `registered_users_ibfk_1` FOREIGN KEY (`user_type`) REFERENCES `user_types` (`user_type`);
 
 --
 -- Constraints for table `route`
