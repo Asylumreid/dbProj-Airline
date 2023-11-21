@@ -71,7 +71,7 @@ function SearchFlights() {
       <NavBar />
       <div class="container mt-1">
         <Alert show={showAlert} variant="warning" dismissible onClose={() => setShowAlert(false)}>
-          <Alert.Heading>Important Notice</Alert.Heading>! Fligths are sheduled between Feb 1st 2024 to Feb 7th 2024
+          <Alert.Heading>Important Notice</Alert.Heading>! Fligths are scheduled between Feb 1st 2024 to Feb 7th 2024
         </Alert>
       </div>
       <Container className="rounded rounded-5 border bg-light text-dark border-secondary pt-2  my-5 hover-shadow">

@@ -113,7 +113,7 @@ function CheckOut() {
             <Alert.Heading></Alert.Heading>
             <h3 className="text-center">Thank You For your Payment</h3>
             <h3 className="text-center">
-              Your ticket deatils will be sent to your <b className="text-danger">{user.email}</b>
+              Your ticket details will be sent to your <b className="text-danger">{user.email}</b>
             </h3>
             <h3 className="text-center">Have a safe journey</h3>
             <hr />

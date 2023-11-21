@@ -10,7 +10,7 @@ var router = express.Router();
 //to get flight details in UTC time
 router.get("/flights", (req, res) => {
   const sqlGet =
-    "select s.flight_id, s.airplane_id, s.origin, s.destination, DATE_FORMAT(s.departure_time , '%Y-%m-%d %k:%i:%s') as departure_time, DATE_FORMAT(s.arrival_time , '%Y-%m-%d %k:%i:%s') as arrival_time, s.economy_fare, s.business_fare, s.platinum_fare, s.status from shedule s order by s.flight_id";
+    "select s.flight_id, s.airplane_id, s.origin, s.destination, DATE_FORMAT(s.departure_time , '%Y-%m-%d %k:%i:%s') as departure_time, DATE_FORMAT(s.arrival_time , '%Y-%m-%d %k:%i:%s') as arrival_time, s.economy_fare, s.business_fare, s.platinum_fare, s.status from schedule s order by s.flight_id";
   db.query(sqlGet, (err, result) => {
     if (err) res.send({ err: err });
     else res.send(result);
