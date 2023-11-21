@@ -17,6 +17,8 @@ function ViewFlights() {
   const [flights, setflights] = useState([]);
   const [status, setStatus] = useState(1);
   const [change, setChange] = useState(0);
+  const [file, setFile] = useState(null);
+
 
   useEffect(() => {
     Axios.get(`${process.env.REACT_APP_API_URL}/admin/flights`).then((response) => {
@@ -47,7 +49,47 @@ function ViewFlights() {
       }
       setChange(change + 1);
     });
+    
+  }
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
   };
+
+  /*const handleFileUpload = () => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    Axios.post(`${process.env.REACT_APP_API_URL}/admin/uploadFlightsCSV`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then((response) => {
+        toast.success("CSV file uploaded and processed successfully");
+        setChange(change + 1);
+      })
+      .catch((error) => {
+        toast.error("Error uploading and processing CSV file");
+      });
+  };
+  ;*/
+const handleFileUpload = () => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  Axios.post(`${process.env.REACT_APP_API_URL}/admin/uploadFlightsCSV`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+    .then((response) => {
+      toast.success("CSV file uploaded and processed successfully");
+      setChange(change + 1);
+    })
+    .catch((error) => {
+      toast.error("Error uploading and processing CSV file");
+    });
+}
 
   return (
     <>
@@ -66,6 +108,17 @@ function ViewFlights() {
         transition={Flip}
       />
       <NavBar />
+      {/* New section for file upload */}
+      <div className="container mt-4">
+        <h4>Upload Flights CSV</h4>
+        <Form.Group controlId="formFile" className="mb-3">
+          <Form.Label>Select CSV file:</Form.Label>
+          <Form.Control type="file" onChange={handleFileChange} />
+        </Form.Group>
+        <Button variant="primary" onClick={handleFileUpload}>
+          Upload and Process CSV
+        </Button>
+      </div>
       <div className="mb-5" />
       <div className="container table-responsive">
         <table className="table  table-bordered table-striped table-hover">
