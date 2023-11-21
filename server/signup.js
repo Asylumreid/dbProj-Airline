@@ -17,7 +17,7 @@ router.post("/", (req, res) => {
     .hash(password, 10)
     .then((hash) => {
       password = hash;
-      const sqlInsert = "call insert_registered_user(?,?,?,?,?,?,?,?)";
+      const sqlInsert = "CALL insert_registered_user(?, ?, ?, ?, ?, ?, ?)";
       db.query(sqlInsert, [firstName, lastName, password, email, phoneNumber, gender, dob], (err, result) => {
         if (err) {
           res.send(err);
