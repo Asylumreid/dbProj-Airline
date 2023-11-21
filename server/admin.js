@@ -1,5 +1,11 @@
 import { mongoose, db } from "./dbconfig.js";
 import express from "express";
+import multer from "multer";
+import fs from 'fs';
+import csvParser from 'csv-parser';
+const upload = multer({ dest: 'uploads/' });
+
+
 var router = express.Router();
 //to get flight details in UTC time
 router.get("/flights", (req, res) => {
@@ -31,6 +37,49 @@ router.put("/departureTime/update/:id", (req, res) => {
     if (err) res.send("0");
     else res.send("1");
   });
+});
+
+router.post("/uploadFlightsCSV", upload.single('file'), (req, res) => {
+  const flightsData = [];
+  const { file } = req;
+  const { filename } = file;
+
+  // Use csv-parser to parse the CSV file
+  fs.createReadStream(file.path)
+    .pipe(csvParser())
+    .on('data', (row) => {
+      flightsData.push(row);
+    })
+    .on('end', () => {
+      if (flightsData.length === 0) {
+        return res.status(400).json({ success: false, message: 'No data found in the CSV file.' });
+      }
+
+      const sqlInsert = "INSERT INTO flights (flight_id, airplane_id, route_id, flightstatus_id, departure_time, arrival_time, flight_no, economy_fare, business_fare, platinum_fare) VALUES ?";
+      const values = flightsData.map((flight) => [
+        flight.flight_id,
+        flight.airplane_id,
+        flight.route_id,
+        flight.flightstatus_id,
+        flight.departure_time,
+        flight.arrival_time,
+        flight.flight_no,
+        flight.economy_fare,
+        flight.business_fare,
+        flight.platinum_fare,
+      ]);
+
+      console.log('Testing SQL Query:', sqlInsert, [values]);
+
+      db.query(sqlInsert, [values], (err, result) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ success: false, message: 'Internal server error.' });
+        } else {
+          res.status(200).json({ success: true, message: 'File uploaded and data inserted successfully.' });
+        }
+      });
+    });
 });
 
 //to update arrival time
