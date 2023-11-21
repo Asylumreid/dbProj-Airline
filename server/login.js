@@ -28,6 +28,8 @@ router.get("/user/:id", (req, res) => {
   );
 });
 
+
+
 //to validate user login
 router.post("/user", (req, res) => {
   const { email, password } = req.body;
