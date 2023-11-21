@@ -859,13 +859,13 @@ CREATE TABLE `registered_users` (
 
 INSERT INTO `registered_users` (`user_id`, `first_name`, `last_name`, `password`, `email`, `phone_number`, `gender`, `dob`, `user_type`) VALUES
 (1, 'Praveen', 'Kumar', 'handsomePraveen', 'pk@gmail.com', '96364586', 'male', '2000-01-12', 'gold'),
-(21, 'asdg', 'hfdjhda', 'sathb@lkH231', 'fgsd@gmail.com', '1243467845', 'male', '2023-01-03', 'normal'),
-(22, 'Sanujen', 'Premkumar', 'sanujen29', 'sanuprem6@gmail.com', '0758528933', 'male', '2000-07-29', 'frequent'),
-(23, 'Sathveegan', 'Yogendrarajah', 'sathvee123', 'ysathu8@gmail.com', '0764986321', 'male', '2000-03-08', 'frequent'),
-(24, 'si', 'Kajan', 'Qnhiudb2gh3n', 'sivanisa@gmail.com', '0760022990', 'male', '2000-03-25', 'normal'),
-(25, 'Pairavi', 'Thanancheyan', 'dfjdfdf', 'paira@gmail.com', '0774464523', 'female', '2000-11-02', 'frequent'),
-(27, 'Sivarasa', 'Nisanthan', 'South@2019', 'sivanisanthan2503@gmail.com', '0760022992', 'male', '2000-03-25', 'frequent'),
-(28, 'Mathusha', 'Sivaananthan', 'Mathu2k#2000', 'mathushasiva2k@gmail.com', '0772956568', 'female', '2000-01-01', 'normal');
+(21, 'Leshawn', 'Chan', 'lc123', 'fgsd@gmail.com', '96581243', 'male', '2023-01-03', 'normal'),
+(22, 'Sanujen', 'Premkumar', 'sanujen29', 'sanuprem6@gmail.com', '84521365', 'male', '2000-07-29', 'frequent'),
+(23, 'Jackson', 'Lim', 'jackiechan', 'jack@gmail.com', '86512547', 'male', '2000-03-08', 'frequent'),
+(24, 'Sebby', 'Wang', 'sebbyyyyy', 'sebby@gmail.com', '87452256', 'male', '2000-03-25', 'normal'),
+(25, 'Zhang', 'Huahua', 'zhangzhang', 'zhang@gmail.com', '98985624', 'female', '2000-11-02', 'frequent'),
+(27, 'Axel', 'Po', 'axie@2000', 'axel2000@gmail.com', '87441125', 'male', '2000-03-25', 'frequent'),
+(28, 'Lucas', 'Tan', 'lucasi', 'lucas123@gmail.com', '88855236', 'female', '2000-01-01', 'normal');
 
 -- --------------------------------------------------------
 
