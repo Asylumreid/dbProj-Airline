@@ -130,7 +130,7 @@ const PostReviews = () => {
               Post
             </button>
           </form>
-        ) : (<p>Loading user data...</p>
+        ) : (<p>Login to post a review</p>
           )}
           <ToastContainer
         position="top-center"

@@ -23,17 +23,17 @@ export default function AircraftDetails() {
       <MDBCarousel showIndicators showControls fade>
         <MDBCarouselItem className="w-100 d-block" itemId={1} src={require("../images/flight_for_Details.jpg")} alt="...">
           <h1>AircraftDetails</h1>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          <p>SIT Airline brings you to your dreams</p>
         </MDBCarouselItem>
 
         <MDBCarouselItem className="w-100 d-block" itemId={2} src={require("../images/Aeroflot-Air-HostessForDetails.jpg")} alt="...">
           <h1>AircraftDetails</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p>Fly with SIT Air.</p>
         </MDBCarouselItem>
 
         <MDBCarouselItem className="w-100 d-block" itemId={3} src={require("../images/forDetails.jpg")} alt="...">
           <h1>AircraftDetails</h1>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+          <p>SIT Air</p>
         </MDBCarouselItem>
       </MDBCarousel>
 
