@@ -49,7 +49,7 @@ function ViewFlights() {
       }
       setChange(change + 1);
     });
-    
+
   }
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -73,23 +73,39 @@ function ViewFlights() {
       });
   };
   ;*/
-const handleFileUpload = () => {
-  const formData = new FormData();
-  formData.append("file", file);
+  const handleFileUpload = () => {
+    const formData = new FormData();
+    formData.append("file", file);
 
-  Axios.post(`${process.env.REACT_APP_API_URL}/admin/uploadFlightsCSV`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  })
-    .then((response) => {
-      toast.success("CSV file uploaded and processed successfully");
-      setChange(change + 1);
+    Axios.post(`${process.env.REACT_APP_API_URL}/admin/uploadFlightsCSV`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     })
-    .catch((error) => {
-      toast.error("Error uploading and processing CSV file");
-    });
-}
+      .then((response) => {
+        toast.success("CSV file uploaded and processed successfully");
+        setChange(change + 1);
+      })
+      .catch((error) => {
+        toast.error("Error uploading and processing CSV file");
+      });
+  }
+
+  const handleDelete = (flight_id) => {
+    if (window.confirm("Are you sure you want to delete this flight?")) {
+      axios
+        .delete(`${process.env.REACT_APP_API_URL}/admin/deleteFlight/${flight_id}`)
+        .then((response) => {
+          toast.success("Flight deleted successfully");
+          setChange(change + 1);
+        })
+        .catch((error) => {
+          toast.error("Error deleting flight: " + (error.response?.data?.details || "Unknown error"));
+        });
+    }
+  };
+  
+  
 
   return (
     <>
@@ -187,6 +203,15 @@ const handleFileUpload = () => {
                       >
                         CHANGE
                       </button>
+                      <button
+                      type="button"
+                      className="btn btn-danger mt-2 mr-2"
+                      onClick={() => {
+                        handleDelete(flight_id);
+                      }}
+                    >
+                      DELETE
+                    </button>
                     </Form>
                   </td>
                 </tr>

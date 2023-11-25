@@ -92,4 +92,24 @@ router.put("/arrivalTime/update/:id", (req, res) => {
     else res.send("1");
   });
 });
+
+router.delete("/deleteFlight/:flight_id", async (req, res) => {
+  try {
+    const flight_id = req.params.flight_id;
+    const sqlDelete = "DELETE FROM flights WHERE flight_id = ?";
+    
+    db.query(sqlDelete, [flight_id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ success: false, error: "Error deleting flight", details: err.message });
+      } else {
+        res.json({ success: true });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: "Error deleting flight", details: error.message });
+  }
+});
+
 export default router;

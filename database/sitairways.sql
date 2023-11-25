@@ -1322,7 +1322,7 @@ ALTER TABLE `airplane`
 -- Constraints for table `booking`
 --
 ALTER TABLE `booking`
-  ADD CONSTRAINT `flight_id` FOREIGN KEY (`flight_id`) REFERENCES `flights` (`flight_id`),
+  ADD CONSTRAINT `flight_id` FOREIGN KEY (`flight_id`) REFERENCES `flights` (`flight_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `registered_users` (`user_id`);
 
 --
@@ -1351,7 +1351,7 @@ ALTER TABLE `route`
 --
 ALTER TABLE `ticket`
   ADD CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`passport_number`) REFERENCES `passenger` (`passport_number`),
-  ADD CONSTRAINT `ticket_ibfk_2` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`booking_id`);
+  ADD CONSTRAINT `ticket_ibfk_2` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`booking_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
