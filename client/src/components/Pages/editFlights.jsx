@@ -193,7 +193,7 @@ function ViewFlights() {
                         <option value={5}>Landed</option>
                         <option value={6}>Cancelled</option>
                       </Form.Select>
-
+                      <div className="d-flex flex-column align-items-center">
                       <button
                         type="button"
                         className="btn btn-danger mt-2"
@@ -205,13 +205,14 @@ function ViewFlights() {
                       </button>
                       <button
                       type="button"
-                      className="btn btn-danger mt-2 mr-2"
+                      className="btn btn-danger mt-2"
                       onClick={() => {
                         handleDelete(flight_id);
                       }}
                     >
                       DELETE
                     </button>
+                    </div>
                     </Form>
                   </td>
                 </tr>
