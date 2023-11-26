@@ -114,7 +114,7 @@ function SignIn() {
       <form onSubmit={handleSubmit}>
         <MDBContainer className="p-3 mt-5 d-flex flex-column col-md-8 col-lg-6">
           <MDBTypography tag="div" className="display-6 text-center mb-4 text-primary">
-            B Airways Reservation System
+            SIT Airways Reservation System
           </MDBTypography>
           <Alert show={show} variant="success" dismissible onClose={() => setShow(false)}>
             For quick testing purposes, use these credentials.
