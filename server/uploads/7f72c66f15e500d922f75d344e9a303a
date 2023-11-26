@@ -1,2 +1,0 @@
-flight_id,airplane_id,route_id,flightstatus_id,departure_time,arrival_time,flight_no,economy_fare,business_fare,platinum_fare
-142,A001,1,1,2025-02-01 13:30:00,2025-02-01 13:30:01,1,qjrnd,2404.78,1474.9
