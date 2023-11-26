@@ -71,16 +71,27 @@ router.post("/uploadFlightsCSV", upload.single('file'), (req, res) => {
 
       console.log('Testing SQL Query:', sqlInsert, [values]);
 
+      const filePath = file.path; // Define filePath here
+
       db.query(sqlInsert, [values], (err, result) => {
         if (err) {
           console.error(err);
           res.status(500).json({ success: false, message: 'Internal server error.' });
         } else {
-          res.status(200).json({ success: true, message: 'File uploaded and data inserted successfully.' });
+          // Delete the uploaded CSV file after successful insertion
+          fs.unlink(filePath, (unlinkErr) => {
+            if (unlinkErr) {
+              console.error(unlinkErr);
+              res.status(500).json({ success: false, message: 'Error deleting the uploaded file.' });
+            } else {
+              res.status(200).json({ success: true, message: 'File uploaded, data inserted, and file deleted successfully.' });
+            }
+          });
         }
       });
     });
 });
+
 
 //to update arrival time
 router.put("/arrivalTime/update/:id", (req, res) => {
