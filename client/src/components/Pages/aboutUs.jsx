@@ -17,17 +17,17 @@ function Aboutus() {
             <div className="col-sm-4 hover-shadow">
               <span className="glyphicon glyphicon-off logo-small "></span>
               <h4>BEST OFFERS</h4>
-              <p>Lorem ipsum dolor sit amet..</p>
+              <p>Unlock special offers and deals tailored just for you</p>
             </div>
             <div className="col-sm-4 hover-shadow">
               <span className="glyphicon glyphicon-heart logo-small"></span>
               <h4>TRANSPARENCY IN PRICE</h4>
-              <p>Lorem ipsum dolor sit amet..</p>
+              <p>No hidden costs - our prices are clear and straightforward.</p>
             </div>
             <div className="col-sm-4 hover-shadow">
               <span className="glyphicon glyphicon-lock logo-small"></span>
               <h4>JOB DONE</h4>
-              <p>Lorem ipsum dolor sit amet..</p>
+              <p>We get the job done with efficiency and reliability.</p>
             </div>
           </div>
           <br />
@@ -36,17 +36,17 @@ function Aboutus() {
             <div className="col-sm-4 hover-shadow">
               <span className="glyphicon glyphicon-leaf logo-small"></span>
               <h4>HIGH QUALITY</h4>
-              <p>Lorem ipsum dolor sit amet..</p>
+              <p>Experience top-notch quality and comfort throughout your journey.</p>
             </div>
             <div className="col-sm-4 hover-shadow">
               <span className="glyphicon glyphicon-certificate logo-small"></span>
               <h4>CERTIFIED PROFESSIONALS</h4>
-              <p>Lorem ipsum dolor sit amet..</p>
+              <p>Our dedicated team consists of certified professionals ensuring your safety</p>
             </div>
             <div className="col-sm-4 hover-shadow">
               <span className="glyphicon glyphicon-wrench logo-small"></span>
               <h4>HARD WORK</h4>
-              <p>Lorem ipsum dolor sit amet..</p>
+              <p>Hard work and commitment to providing the best travel experience for you.</p>
             </div>
           </div>
         </div>
