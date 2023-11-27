@@ -1,0 +1,25 @@
+User Manual to Run Project
+
+
+Server Side
+Open Terminal and Type:
+- cd server
+- npm Install 
+- cp env.example .env (Update the env file to include SQL credential)
+
+
+Run SQL Script seperately (To update our SQL implementation - SQL Script file located under database folder)
+Run MongoDB seperately (Needed before starting the server for connection)
+
+Once done, in terminal:
+node server
+
+
+Client Side
+Open Terminal and Type:
+- cd client
+- npm install
+- cp env.example .env
+- npm start
+
+Ensure both the client and server are running concurrently for the full functionality.
